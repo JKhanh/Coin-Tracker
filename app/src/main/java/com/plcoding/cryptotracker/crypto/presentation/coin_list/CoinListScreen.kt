@@ -60,7 +60,7 @@ private fun CoinListScreenPreview() {
                 coins = (1 .. 100).map {
                     previewCoin.toCoinUi().copy(id = it.toString())
                 }
-        ),
+            ),
             modifier = Modifier.background(
                 MaterialTheme.colorScheme.background
             ))
