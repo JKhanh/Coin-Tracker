@@ -16,7 +16,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.StrokeCap
@@ -169,11 +168,11 @@ fun LineChart(
                         style.unselectedColor
                     },
                     start = Offset(
-                        x = x + xLabelWidth / 2f,
+                        x = x + result.size.width / 2f,
                         y = viewPortTopY
                     ),
                     end = Offset(
-                        x = x + xLabelWidth / 2f,
+                        x = x + result.size.width / 2f,
                         y = viewPortBottomY
                     ),
                     strokeWidth = if (selectedDataPointIndex == index) {
