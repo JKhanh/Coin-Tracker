@@ -21,4 +21,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "CryptoTracker"
 include(":app")
- 
+include(":shared")

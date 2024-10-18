@@ -69,6 +69,7 @@ dependencies {
     implementation(libs.bundles.koin)
 
     implementation(libs.bundles.ktor)
+    implementation(project(":shared"))
 
     testImplementation(libs.junit)
 
