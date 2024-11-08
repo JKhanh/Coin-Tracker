@@ -1,7 +1,8 @@
 package com.plcoding.cryptotracker
 
 import android.app.Application
-import com.plcoding.cryptotracker.di.appModule
+import com.jkhanh.shared.di.commonModule
+import com.jkhanh.shared.di.networkModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -12,7 +13,7 @@ class CryptoTrackerApp: Application() {
         startKoin {
             androidContext(this@CryptoTrackerApp)
             androidLogger()
-            modules(listOf(appModule))
+            modules(listOf(commonModule, networkModule))
         }
     }
 }
