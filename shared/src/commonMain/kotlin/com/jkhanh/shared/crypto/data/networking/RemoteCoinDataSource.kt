@@ -1,5 +1,6 @@
 package com.jkhanh.shared.crypto.data.networking
 
+import androidx.compose.ui.text.Paragraph
 import com.jkhanh.shared.core.data.networking.constructUrl
 import com.jkhanh.shared.core.data.networking.safeCall
 import com.jkhanh.shared.core.domain.util.NetworkError
@@ -27,6 +28,19 @@ class RemoteCoinDataSource(
             httpClient.get(
                 urlString = constructUrl("/assets")
             )
+        }.map { response ->
+            response.data.map { it.toCoin() }
+        }
+    }
+
+    override suspend fun getCoinsPaging(offset: Int, limit: Int): Result<List<Coin>, NetworkError> {
+        return safeCall<CoinsResponseDto> {
+            httpClient.get(
+                urlString = constructUrl("/assets")
+            ) {
+                parameter("offset", offset)
+                parameter("limit", limit)
+            }
         }.map { response ->
             response.data.map { it.toCoin() }
         }

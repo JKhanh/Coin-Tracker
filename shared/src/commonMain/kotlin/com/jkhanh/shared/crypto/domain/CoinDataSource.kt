@@ -6,6 +6,7 @@ import kotlinx.datetime.LocalDateTime
 
 interface CoinDataSource {
     suspend fun getCoins(): Result<List<Coin>, NetworkError>
+    suspend fun getCoinsPaging(offset: Int, limit: Int): Result<List<Coin>, NetworkError>
     suspend fun getCoinHistory(
         coinId: String,
         start: LocalDateTime,

@@ -1,4 +1,5 @@
 [versions]
+adaptive = "1.0.0-alpha03"
 agp = "8.5.2"
 kotlin = "2.0.20"
 coreKtx = "1.13.1"
@@ -20,8 +21,13 @@ compose-plugin = "1.7.0"
 android-gradlePlugin = "8.2.2"
 napier = "2.6.1"
 navigationCompose = "2.8.0-alpha10"
+material3WindowSizeClass = "1.7.0"
+pagingCommon = "3.3.0-alpha02-0.5.1"
 
 [libraries]
+adaptive = { module = "org.jetbrains.compose.material3.adaptive:adaptive", version.ref = "adaptive" }
+adaptive-layout = { module = "org.jetbrains.compose.material3.adaptive:adaptive-layout", version.ref = "adaptive" }
+adaptive-navigation = { module = "org.jetbrains.compose.material3.adaptive:adaptive-navigation", version.ref = "adaptive" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
@@ -58,6 +64,9 @@ compose-material-icons-extended = { group = "androidx.compose.material", name = 
 lifecycle-viewmodel-compose = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycleViewmodelCompose" }
 napier = { group = "io.github.aakira", name = "napier", version.ref = "napier"}
 navigation-compose = { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
+material3-windowsize = { module = "org.jetbrains.compose.material3:material3-window-size-class", version.ref = "material3WindowSizeClass" }
+paging-common = { module = "app.cash.paging:paging-common", version.ref = "pagingCommon" }
+paging-compose-common = { module = "app.cash.paging:paging-compose-common", version.ref = "pagingCommon" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
@@ -95,4 +104,9 @@ ktor = [
     "ktor-client-core",
     "ktor-client-logging",
     "ktor-serialization-kotlinx-json"
+]
+adaptive = [
+    "adaptive",
+    "adaptive-layout",
+    "adaptive-navigation"
 ]

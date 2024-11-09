@@ -2,10 +2,14 @@ package com.jkhanh.shared.crypto.presentation.coin_list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.cachedIn
+import app.cash.paging.Pager
+import app.cash.paging.map
 import com.jkhanh.shared.core.domain.util.onError
 import com.jkhanh.shared.core.domain.util.onSuccess
 import com.jkhanh.shared.core.presentation.util.minus
 import com.jkhanh.shared.core.presentation.util.now
+import com.jkhanh.shared.crypto.domain.Coin
 import com.jkhanh.shared.crypto.domain.CoinDataSource
 import com.jkhanh.shared.crypto.presentation.coin_detail.DataPoint
 import com.jkhanh.shared.crypto.presentation.models.CoinUi
@@ -15,6 +19,7 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
@@ -26,12 +31,20 @@ import kotlinx.datetime.format
 import kotlinx.datetime.format.char
 
 class CoinListViewModel(
+    pager: Pager<Int, Coin>,
     private val coinDataSource: CoinDataSource
 ): ViewModel() {
 
+    var coinListPagerFlow = pager.flow
+        .map { pagingData ->
+            pagingData.map { item ->
+                item.toCoinUi()
+            }
+        }
+        .cachedIn(viewModelScope)
+
     private val _state = MutableStateFlow(CoinListState())
     val state = _state.asStateFlow()
-        .onStart { loadCoins() }
         .stateIn(
             viewModelScope,
             SharingStarted.WhileSubscribed(5000L),
@@ -46,24 +59,6 @@ class CoinListViewModel(
             is CoinListAction.OnCoinClick -> {
                 selectCoin(action.coinUi)
             }
-        }
-    }
-
-    private fun loadCoins() {
-        viewModelScope.launch {
-            _state.update { it.copy(isLoading = true) }
-
-            coinDataSource.getCoins()
-                .onSuccess { coins ->
-                    _state.update { it.copy(
-                        isLoading = false,
-                        coins = coins.map { it.toCoinUi() }
-                    ) }
-                }
-                .onError { error ->
-                    _state.update { it.copy(isLoading = false) }
-                    _events.send(CoinListEvent.Error(error))
-                }
         }
     }
 
